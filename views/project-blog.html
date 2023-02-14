@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!-- Bootstrap CSS -->
+        <!-- https://cdnjs.com/libraries/twitter-bootstrap/5.0.0-beta1 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/css/bootstrap.min.css"/>
+
+        <!-- Icons: https://getbootstrap.com/docs/5.0/extend/icons/ -->
+        <!-- https://cdnjs.com/libraries/font-awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css"/>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="/public/css/main.css"/>
+
+        <!-- Animation AOS CSS -->
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+        <title>CHAPTER 02</title>
+    </head>
+
+    <body>
+         <!-- NavBar -->
+         <header>
+            <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary bg-dark shadow" data-aos="fade-down" data-aos-duration="500">
+                <div class="container px-3">
+                    <!-- NavBar Logo -->
+                    <a class="navbar-brand me-5" href="/">
+                        <img src="/public/img/navbar.png" alt="Logo" class="" id="nav-logo">
+                    </a>
+                    <!-- End NavBar Logo -->
+
+                    <!-- NavBar Toggle -->
+                    <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span><i class="fas fa-bars"></i></span>
+                    </button>
+                    <!-- End NavBar Toggle -->
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <!-- Left Side -->
+                        <ul class="navbar-nav me-auto mt-2 mt-lg-0 mb-2 mb-lg-0">
+                            <li class="nav-item me-5">
+                                <a class="nav-link" aria-current="page" href="/">Home</a>
+                            </li>
+                            {{if $.Data.IsLogin}}
+                            <li class="nav-item me-5">
+                                <a class="nav-link" href="/add-project">Add Project</a>
+                            </li>
+                            {{end}}
+                        </ul>
+                        <!-- End Left Side -->
+
+                        <!-- Right Side -->
+                        <ul class="navbar-nav mt-2 mt-lg-0 mb-2 mb-lg-0">
+                            {{if $.Data.IsLogin}}
+                            <li class="nav-item">
+                                <a class="nav-link me-5" href="/"><i class="fas fa-user me-2"></i>{{.Data.Name}}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link me-5" href="/logout">Logout</a>
+                            </li>
+                            {{else}}
+                            <li class="nav-item">
+                                <a class="nav-link me-5" href="/register">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link me-5" href="/login">Login</a>
+                            </li>
+                            {{end}}
+                        </ul>
+                        <a class="btn btn-outline-light btn-sm px-3 py-1" href="/contact-me" role="button">Contact Me</a>
+                        <!-- End Right Side -->
+
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <!-- End NavBar -->
+
+        <!-- Content -->
+        <section class="home d-flex justify-content-center align-items-center" data-aos="fade-down" data-aos-duration="500">
+            <div class="container-fluid home-upper">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    {{range $index, $data := .Project}}
+                    <!-- Title -->
+                    <div class="text-center">
+                        <h1>{{$data.Pname}}</h1>
+                    </div>                
+                    <!-- End Title -->
+
+                    <!-- Upper Content -->
+                    <div class="container mt-4">
+                        <div class="row h-100">
+                            <!-- Left Side -->
+                            <div class="h-100 py-4 pe-lg-5 col-12 col-lg-8 order-1 d-flex flex-column justify-content-center">
+                                <!-- Project Image -->
+                                <div class="project-blog-image bg-dark px-0 py-0 mx-0 mt-0 d-flex flex-column justify-content-center">
+                                    <img class="pb-image" src="/uploads/{{$data.Image}}" alt="Blog Image" style="width:100%;">
+                                </div>
+                                <!-- End Project Image -->
+                            </div>
+                            <!-- End Left Side -->
+    
+                            <!-- Right Side -->
+                            <div class="h-100 col-12 col-lg-4 order-2 d-flex flex-column">
+                                <div class="blog-right-side mt-4">
+                                    <div class="d-flex flex-column">
+                                        <div class="duration mb-3">
+                                            <h4>Duration</h4>
+                                            <p class="d-flex align-items-center"><i class="fas fa-calendar-alt me-3"></i>{{$data.SdateDetail}} - {{$data.EdateDetail}}</p>
+                                            <p class="d-flex align-items-center"><i class="fas fa-clock me-3"></i>{{$data.Duration}}</p>
+                                        </div>
+
+                                        <div class="technology">
+                                            <h4>Technology</h4>
+                                            <div class="d-flex flex-row flex-wrap" style="row-gap: 5px;">
+                                                {{if $.IsPHP}}
+                                                <p class="d-flex align-items-center col-6"><i class="fab fa-php me-3"></i></i>PHP</p>
+                                                {{end}}
+
+                                                {{if $.IsJS}}
+                                                <p class="d-flex align-items-center col-6"><i class="fab fa-js-square me-3"></i>Javascript</p>
+                                                {{end}}
+
+                                                {{if $.IsPYTHON}}
+                                                <p class="d-flex align-items-center col-6"><i class="fab fa-python me-3"></i>Python</p>
+                                                {{end}}
+
+                                                {{if $.IsHTML}}
+                                                <p class="d-flex align-items-center col-6"><i class="fab fa-html5 me-3"></i>HTML</p>
+                                                {{end}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Right Side -->
+                        </div>
+                    </div>
+                    <!-- End Upper Content -->
+
+                    <!-- Lower Content -->
+                    <div class="container mt-4">
+                        <p style="text-align: justify">
+                            {{$data.Description}}
+                        </p>
+                    </div>
+                    <!-- End Lower Content -->
+                {{end}}
+                </div>
+                
+            </div>
+        </section>
+        <!-- End Content -->
+
+        
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.4/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-beta1/js/bootstrap.min.js"></script>
+
+        <!-- Animation AOS JS -->
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+        <!-- Main JS -->
+        <script src="/public/js/main.js"></script>
+        
+    </body>
+</html>
